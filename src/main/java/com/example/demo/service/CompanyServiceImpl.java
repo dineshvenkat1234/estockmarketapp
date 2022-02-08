@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,35 @@ public class CompanyServiceImpl implements CompanyService{
 			return companyRepository.saveAndFlush(company);
 		}
 		return null;
+	}
+
+	@Override
+	public boolean deleteCompany(int companyId) {
+		companyRepository.deleteById(companyId);
+		return true;
+	}
+
+	@Override
+	public Company getCompany(int companyId) {
+		
+		Company company=companyRepository.findById(companyId).get();
+		
+		return company;
+	}
+
+	@Override
+	public Company addStockPrice(int companyId, Company company) {
+		Company company1= companyRepository.findById(companyId).get();
+		company1.setStockPrice(company.getStockPrice());
+		company1.setTimeStamp();
+		return companyRepository.saveAndFlush(company1);
+	}
+
+	@Override
+	public Company updateStockPrice(int companyId, Company company) {
+		Company company1= companyRepository.findById(companyId).get();
+		company1.setStockPrice(company.getStockPrice());
+		company1.setTimeStamp();
+		return companyRepository.saveAndFlush(company1);
 	}
 }

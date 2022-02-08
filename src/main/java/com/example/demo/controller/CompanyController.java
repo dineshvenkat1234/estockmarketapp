@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,5 +39,40 @@ public class CompanyController {
 			 return new ResponseEntity<Company>(company, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("Sorry data is not inserted!",HttpStatus.CONFLICT);
+	}
+	
+	@DeleteMapping("/delete/{companycode}")
+	public ResponseEntity<?> deleteCompany(@PathVariable("companycode") int companyCode){
+		if(companyService.deleteCompany(companyCode)) {
+			return new ResponseEntity<String>("Records Deleted",HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<String>("Cannt delete due to error", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@GetMapping("/info/{companycode}")
+	public ResponseEntity<?> getCompany(@PathVariable("companycode") int companyCode){
+		Company company=companyService.getCompany(companyCode);
+		if(company!=null) {
+			return new ResponseEntity<Company>(company, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("No company found with ID", HttpStatus.NO_CONTENT);
+	}
+	
+	@PostMapping(value="/add/{companycode}", consumes = "application/json; charset=utf-8")
+	public ResponseEntity<?> addStockPrice(@PathVariable("companycode") int companyCode,@RequestBody Company company){
+		Company company1 = companyService.addStockPrice(companyCode, company);
+		if(company1!=null) {
+			return new ResponseEntity<Company>(company1, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Stock price not inserted",HttpStatus.CONFLICT);
+	}
+	
+	@PostMapping(value="/put/{companycode}", consumes = "application/json; charset=utf-8")
+	public ResponseEntity<?> updateStockPrice(@PathVariable("companycode") int companyCode,@RequestBody Company company){
+		Company company1 = companyService.updateStockPrice(companyCode, company);
+		if(company1!=null) {
+			return new ResponseEntity<Company>(company1, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Stock price not updated",HttpStatus.CONFLICT);
 	}
 }
