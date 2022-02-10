@@ -3,10 +3,12 @@ package com.example.demo.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exceptions.CompanyIDAlreadyExistsExceptions;
 import com.example.demo.model.Company;
 import com.example.demo.repository.CompanyRepository;
 
@@ -26,11 +28,12 @@ public class CompanyServiceImpl implements CompanyService{
 	}
 
 	@Override
-	public Company addCompany(Company company) {
-		if(company!=null) {
-			return companyRepository.saveAndFlush(company);
+	public Company addCompany(Company company) throws CompanyIDAlreadyExistsExceptions{
+		Optional<Company> optional = companyRepository.findById(company.getCompanyCode());
+		if(optional.isPresent()) {
+			throw new CompanyIDAlreadyExistsExceptions();
 		}
-		return null;
+		return companyRepository.saveAndFlush(company);
 	}
 
 	@Override
