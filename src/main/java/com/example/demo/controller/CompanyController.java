@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.CompanyIDAlreadyExistsExceptions;
 import com.example.demo.model.Company;
+import com.example.demo.response.ResponseHandler;
 import com.example.demo.service.CompanyService;
 
 @RestController
@@ -29,7 +32,8 @@ public class CompanyController {
 	public ResponseEntity<?> getAllCompanies(){
 		List<Company> companyList = companyService.getAllCompanies();
 		if(companyList!=null) {
-			return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
+			CacheControl cacheControl=CacheControl.maxAge(5,TimeUnit.MINUTES);
+			return ResponseEntity.ok().cacheControl(cacheControl).body(ResponseHandler.generateResponse("Succesfully retrieved the data", HttpStatus.OK,companyList));
 		}
 		
 		return new ResponseEntity<String>("Company List is Empty!",HttpStatus.NO_CONTENT);
