@@ -42,7 +42,7 @@ public class CompanyController {
 	@PostMapping(value="/company/register", consumes = "application/json; charset=utf-8")
 	public ResponseEntity<?> addCompany(@RequestBody Company company) throws CompanyIDAlreadyExistsExceptions{
 		if(companyService.addCompany(company)!=null) {
-			 return new ResponseEntity<Company>(company, HttpStatus.OK);
+			 return new ResponseEntity<Company>(company, HttpStatus.CREATED);
 		}
 		return new ResponseEntity<String>("Sorry data is not inserted!",HttpStatus.CONFLICT);
 	}
@@ -68,7 +68,7 @@ public class CompanyController {
 	public ResponseEntity<?> addStockPrice(@PathVariable("companycode") int companyCode,@RequestBody Company company){
 		Company company1 = companyService.addStockPrice(companyCode, company);
 		if(company1!=null) {
-			return new ResponseEntity<Company>(company1, HttpStatus.OK);
+			return new ResponseEntity<Company>(company1, HttpStatus.CREATED);
 		}
 		return new ResponseEntity<String>("Stock price not inserted",HttpStatus.CONFLICT);
 	}
