@@ -23,9 +23,8 @@ public class Application {
 	}
 	
 	public static void main(String[] args) {
-		ApplicationContext ctx=SpringApplication.run(Application.class, args);
-		ConsumerController consumerController=ctx.getBean(ConsumerController.class);
-		consumerController.getAuthToken();
+		SpringApplication.run(Application.class, args);
+		
 	}
 	
 	@Bean
