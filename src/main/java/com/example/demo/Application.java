@@ -14,22 +14,22 @@ import com.example.demo.filter.CompanyJWTFilter;
 
 public class Application {
 
-	@Bean
+	/*@Bean
 	public FilterRegistrationBean jwtFilter() {
 		FilterRegistrationBean fb = new FilterRegistrationBean();
 		fb.setFilter(new CompanyJWTFilter());
 		fb.addUrlPatterns("/api/v1.0/*");
 		return fb;
-	}
+	}*/
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 		
 	}
 	
-	@Bean
+	/*@Bean
 	public ConsumerController consumerController() {
 		return new ConsumerController();
-	}
+	}*/
 
 }

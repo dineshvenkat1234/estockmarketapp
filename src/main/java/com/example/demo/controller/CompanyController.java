@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.example.demo.response.ResponseHandler;
 import com.example.demo.service.CompanyService;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("api/v1.0/market")
 public class CompanyController {
 
@@ -32,8 +34,9 @@ public class CompanyController {
 	public ResponseEntity<?> getAllCompanies(){
 		List<Company> companyList = companyService.getAllCompanies();
 		if(companyList!=null) {
-			CacheControl cacheControl=CacheControl.maxAge(5,TimeUnit.MINUTES);
-			return ResponseEntity.ok().cacheControl(cacheControl).body(ResponseHandler.generateResponse("Succesfully retrieved the data", HttpStatus.OK,companyList));
+			//CacheControl cacheControl=CacheControl.maxAge(5,TimeUnit.MINUTES);
+			//return ResponseEntity.ok().cacheControl(cacheControl).body(ResponseHandler.generateResponse("Succesfully retrieved the data", HttpStatus.OK,companyList));
+			return new ResponseEntity<List<Company>>(companyList, HttpStatus.OK);
 		}
 		
 		return new ResponseEntity<String>("Company List is Empty!",HttpStatus.NO_CONTENT);
