@@ -39,19 +39,19 @@ public class CompanyServiceImpl implements CompanyService{
 		if(optional.isPresent()) {
 			throw new CompanyIDAlreadyExistsExceptions();
 		}
-		company.setTimeStamp();
-		Stock stock = setStock(company);
-		stockService.addStock(stock);
+		//company.setTimeStamp();
+		//Stock stock = setStock(company);
+		//stockService.addStock(stock);
 		return companyRepository.saveAndFlush(company);
 	}
 
-	private Stock setStock(Company company) {
+	/*private Stock setStock(Company company) {
 		Stock stock = new Stock();
 		stock.setCompanyId(company.getCompanyCode());
 		stock.setStockPrice(company.getStockPrice());
 		stock.setTimeStamp();
 		return stock;
-	}
+	}*/
 
 	@Override
 	public boolean deleteCompany(int companyId) {
@@ -69,6 +69,18 @@ public class CompanyServiceImpl implements CompanyService{
 
 	@Override
 	public Company addStockPrice(int companyId, Company company) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Company updateStockPrice(int companyId, Company company) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*@Override
+	public Company addStockPrice(int companyId, Company company) {
 		Company company1= companyRepository.findById(companyId).get();
 		company1.setStockPrice(company.getStockPrice());
 		company1.setTimeStamp();
@@ -83,5 +95,5 @@ public class CompanyServiceImpl implements CompanyService{
 		company1.setStockPrice(company.getStockPrice());
 		company1.setTimeStamp();
 		return companyRepository.saveAndFlush(company1);
-	}
+	}*/
 }

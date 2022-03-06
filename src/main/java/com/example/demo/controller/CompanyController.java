@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exceptions.CompanyIDAlreadyExistsExceptions;
 import com.example.demo.model.Company;
+import com.example.demo.model.Stock;
 import com.example.demo.response.ResponseHandler;
 import com.example.demo.service.CompanyService;
+import com.example.demo.service.StockService;
 
 @RestController
 @CrossOrigin("*")
@@ -29,6 +31,9 @@ public class CompanyController {
 
 	@Autowired
 	CompanyService companyService;
+	
+	@Autowired
+	StockService stockService;
 	
 	@GetMapping("/company/getall")
 	public ResponseEntity<?> getAllCompanies(){
@@ -68,19 +73,23 @@ public class CompanyController {
 	}
 	
 	@PostMapping(value="/stock/add/{companycode}", consumes = "application/json; charset=utf-8")
-	public ResponseEntity<?> addStockPrice(@PathVariable("companycode") int companyCode,@RequestBody Company company){
-		Company company1 = companyService.addStockPrice(companyCode, company);
-		if(company1!=null) {
-			return new ResponseEntity<Company>(company1, HttpStatus.CREATED);
+	public ResponseEntity<?> addStockPrice(@PathVariable("companycode") int companyCode,@RequestBody Stock stock){
+		//Company company1 = companyService.addStockPrice(companyCode, company);
+		stock.setCompanyCode(companyCode);
+		Stock stock1=stockService.addStock(stock);
+		if(stock1!=null) {
+			return new ResponseEntity<Stock>(stock1, HttpStatus.CREATED);
 		}
 		return new ResponseEntity<String>("Stock price not inserted",HttpStatus.CONFLICT);
 	}
 	
 	@PutMapping(value="/stock/put/{companycode}", consumes = "application/json; charset=utf-8")
-	public ResponseEntity<?> updateStockPrice(@PathVariable("companycode") int companyCode,@RequestBody Company company){
-		Company company1 = companyService.updateStockPrice(companyCode, company);
-		if(company1!=null) {
-			return new ResponseEntity<Company>(company1, HttpStatus.OK);
+	public ResponseEntity<?> updateStockPrice(@PathVariable("companycode") int companyCode,@RequestBody Stock stock){
+		//Company company1 = companyService.updateStockPrice(companyCode, company);
+		stock.setCompanyCode(companyCode);
+		Stock stock1=stockService.addStock(stock);
+		if(stock1!=null) {
+			return new ResponseEntity<Stock>(stock1, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("Stock price not updated",HttpStatus.CONFLICT);
 	}

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
+//import org.springframework.cloud.client.ServiceInstance;
+//import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,7 +23,7 @@ import com.example.demo.model.User;
 @RestController
 @RequestMapping("auth/v1/company")
 public class ConsumerController {
-
+/*
 	@Autowired
 	DiscoveryClient discoveryClient;
 	
@@ -54,5 +54,5 @@ public class ConsumerController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		return new HttpEntity<User>(user,headers);
-	}
+	}*/
 }

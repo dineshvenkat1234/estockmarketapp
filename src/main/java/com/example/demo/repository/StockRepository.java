@@ -14,6 +14,5 @@ import com.example.demo.model.Stock;
 @Transactional
 public interface StockRepository extends JpaRepository<Stock, Integer>{
 
-	@Query(value="select s from Stock s where s.companyId= :companyId ")
-	public List<Stock> getAllStockByCompanyId(int companyId);
+	List<Stock> findAllByCompanyCompanyCode(int companyCode);
 }
